@@ -114,7 +114,7 @@ const Navbar = ({ handleClick, sideClose }) => {
                     localStorage.removeItem("name");
                     localStorage.removeItem("role");
                     localStorage.removeItem("user_id");
-                    await navigate("/login");
+                    await navigate("/");
                   }}
                   className="mb-2 block rounded-lg hover:bg-red-500 hover:text-white  bg-red-50 py-1 px-2 text-sm font-semibold text-red-500"
                 >

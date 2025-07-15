@@ -191,7 +191,7 @@ const Login = () => {
                   <div className="flex justify-between mt-2">
                     <div className="text-sm">Don't have account?</div>
                     <div
-                      onClick={() => navigate("/")}
+                      onClick={() => navigate("/Registration")}
                       className="text-sm underline text-blue-500 transition-all ease-in cursor-pointer hover:-translate-y-1"
                     >
                       {"Register"}

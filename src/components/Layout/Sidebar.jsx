@@ -80,7 +80,10 @@ const Sidebar = ({ handleClick, sideClose }) => {
         className="flex items-center gap-2 py-2 px-4 m-3 cursor-pointer rounded-full text-white bg-gradient-to-r from-blue-950 via-purple-900 to-orange-500"
       >
         <i className={`fa fa-dashboard`}></i>
-        <button className="text-sm" onClick={handleClick}> Dashboard</button>
+        <button className="text-sm" onClick={handleClick}>
+          {" "}
+          Dashboard
+        </button>
       </div>
 
       {role === "admin" ? (

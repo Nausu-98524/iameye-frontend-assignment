@@ -4,9 +4,8 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
 const Layout = () => {
- const [sideClose, setSideClose] = useState(false);
+  const [sideClose, setSideClose] = useState(false);
 
-  // Automatically close sidebar on mobile
   useEffect(() => {
     const isMobile = window.innerWidth <= 768;
     if (isMobile) {

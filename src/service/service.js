@@ -1,6 +1,6 @@
 // utils/fetchData.js
-//const BASE_URL = "http://localhost:8080/api/v1";
-const BASE_URL = "https://iameye-backend-assignment.onrender.com/api/v1";
+const BASE_URL = "http://localhost:8080/api/v1";
+//const BASE_URL = "https://iameye-backend-assignment.onrender.com/api/v1";
 
 const fetchData = async (url, body = {}, method = "POST") => {
   try {
@@ -8,7 +8,6 @@ const fetchData = async (url, body = {}, method = "POST") => {
 
     const headers = {};
 
-    // ✅ Only set Content-Type for JSON
     if (!(body instanceof FormData)) {
       headers["Content-Type"] = "application/json";
     }

@@ -3,8 +3,6 @@ import "./App.css";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Pages/admin/Login";
 import Dashboard from "./components/Pages/admin/Dashboard";
-import Listing from "./components/Pages/admin/Listing";
-import ProductSearch from "./components/Pages/admin/ProductSearch";
 import Registration from "./components/Pages/web/Registration";
 import Error404 from "./components/common/Eroor404";
 import { Toaster } from "react-hot-toast";
@@ -16,13 +14,11 @@ function App() {
   return (
     <>
       <Toaster />
-
       <Routes>
         {/* Public Route */}
         <Route path="/*" element={<Error404 />} />
-
         <Route
-          path="/"
+          path="/Registration"
           element={
             <PublicRoute>
               <Registration />
@@ -30,15 +26,21 @@ function App() {
           }
         />
         <Route
-          path="/login"
+          path="/Login"
           element={
             <PublicRoute>
               <Login />
             </PublicRoute>
           }
         />
-
-        {/* Admin Protected Routes */}
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
             <Route path="/*" element={<Error404 />} />

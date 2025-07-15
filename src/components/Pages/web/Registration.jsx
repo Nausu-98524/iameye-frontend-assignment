@@ -40,14 +40,17 @@ const Registration = () => {
     confirmPassword: "",
     imageUrl: "",
     videoUrl: "",
+    image_public_id: "",
+    video_public_id: "",
   };
   const [formData, setFormData] = useState(initialState);
   const [stateList, setStateList] = useState([]);
+  const [loader, setLoader] = useState(false);
+
   const navigate = useNavigate();
 
   const handleRegistration = async (e) => {
     e.preventDefault();
-
     if (formData.fullName.trim() === "") {
       setFocus("txtFullName");
       return toast.error("Full Name is required");
@@ -98,9 +101,15 @@ const Registration = () => {
     } else if (formData.pinCode.trim() === "") {
       setFocus("txtPincode");
       return toast.error("Pincode is required");
+    } else if (formData.pinCode.trim().length !== 6) {
+      setFocus("txtPincode");
+      return toast.error("Pincode should be 6 digit");
     } else if (formData.adhaarNumber.trim() === "") {
       setFocus("txtAdhaarNo");
       return toast.error("Adhaar no is required");
+    } else if (formData.adhaarNumber.trim().length !== 12) {
+      setFocus("txtAdhaarNo");
+      return toast.error("Please enter valid Adhaar no");
     } else if (formData.panNumber.trim() === "") {
       setFocus("txtPANNo");
       return toast.error("Pan no is required");
@@ -112,12 +121,14 @@ const Registration = () => {
     } else if (formData.videoUrl.trim() === "") {
       return toast.error("Video is required");
     }
+    setLoader(true);
     const response = await fetchData("/register", formData);
+    setLoader(false);
 
     if (response.success) {
       toast.success(response.message);
       setFormData(initialState);
-      navigate("/login");
+      navigate("/");
     } else {
       toast.error(response.message);
     }
@@ -151,7 +162,7 @@ const Registration = () => {
                 <p className="text-sm underline">Registration</p>
                 <button
                   id="login_btn"
-                  onClick={(e) => navigate("/login")}
+                  onClick={(e) => navigate("/")}
                   className={`w-full rounded-md bg-gradient-to-r from-blue-900 via-purple-900 to-orange-500 px-6 py-1 text-md font-semibold text-white shadow-lg transition-all ease-in hover:shadow-none hover:-translate-y-1`}
                 >
                   Login
@@ -468,56 +479,24 @@ const Registration = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-8">
                 <ImageUpload
                   imageUrl={""}
-                  onUploadComplete={(url) =>
-                    setFormData({ ...formData, imageUrl: url })
-                  }
+                  onUploadComplete={(url, image_public_id) => {
+                    setFormData({
+                      ...formData,
+                      imageUrl: url,
+                      image_public_id: image_public_id,
+                    });
+                  }}
                 />
-
                 <VideoUpload
                   videoUrl={""}
-                  onUploadComplete={(videoUrl) =>
-                    setFormData({ ...formData, videoUrl: videoUrl })
+                  onUploadComplete={(videoUrl, video_public_id) =>
+                    setFormData({
+                      ...formData,
+                      videoUrl: videoUrl,
+                      video_public_id: video_public_id,
+                    })
                   }
                 />
-
-                {/* <div>
-                  <label
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    for="file_input"
-                  >
-                    <div className="flex items-center gap-2">
-                      Upload Video
-                      <FaRegCirclePlay
-                        title="Preview Video"
-                        className="cursor-pointer text-lg"
-                      />
-                    </div>
-                  </label>
-                  <section class="h-full overflow-auto w-full flex flex-col">
-                    <header class="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center">
-                      <p class="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
-                        <span>Drag and drop your</span>&nbsp;
-                        <span>files anywhere or</span>
-                      </p>
-                      <input
-                        id="hidden-input"
-                        type="file"
-                        multiple
-                        class="hidden"
-                      />
-                      <button
-                        id="button"
-                        class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
-                      >
-                        Upload a video
-                      </button>
-                    </header>
-                    <div className="flex justify-between mt-1">
-                      <div className="text-sm">Accept only MP4/MOV </div>
-                      <div className="text-sm">maximum size of 10 MB</div>
-                    </div>
-                  </section>
-                </div> */}
               </div>
             </fieldset>
 
@@ -525,9 +504,10 @@ const Registration = () => {
               <button
                 onClick={handleRegistration}
                 id="btn_submit"
+                disabled={loader}
                 className="rounded-lg py-[10px] px-5 bg-gradient-to-r from-lime-500 to-green-600 hover:bg-gradient-to-r hover:from-lime-600 hover:to-green-700 text-sm font-semibold flex items-center justify-center m-0 leading-none shadow-lg shadow-yellow-100 text-white"
               >
-                Register
+                {loader ? "loading" : "Register"}
               </button>
               <button className="rounded-lg py-[10px] px-5 bg-gradient-to-r from-red-500 to-red-600 hover:bg-gradient-to-r hover:from-red-600 hover:to-red-700 text-sm font-semibold flex items-center justify-center m-0 leading-none shadow-lg shadow-yellow-100 text-white">
                 Reset

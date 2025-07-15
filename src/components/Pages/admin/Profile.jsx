@@ -1,7 +1,5 @@
-import { type } from "@testing-library/user-event/dist/type";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaCamera } from "react-icons/fa";
 import fetchData from "../../../service/service";
 
 const Profile = () => {
@@ -28,7 +26,6 @@ const Profile = () => {
   return (
     <>
       <div className="mt-1 mb-5 py-5 px-8 flex justify-between items-center rounded-xl bg-white shadow-lg">
-        {/* Left Side: User Info */}
         <div className="flex gap-8 items-center">
           <div className="relative">
             <img
@@ -44,12 +41,8 @@ const Profile = () => {
             <div className="text-sm text-gray-700">{userDetails.role}</div>
           </div>
         </div>
-
-        {/* Right Side: Video */}
         {userDetails.videoUrl && (
           <div className="w-60">
-            {" "}
-            {/* fixed width to control layout */}
             <video
               src={userDetails.videoUrl}
               className="cursor-pointer rounded-xl"
