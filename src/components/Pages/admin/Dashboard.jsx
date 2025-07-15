@@ -94,9 +94,11 @@ const Dashboard = () => {
       confirmButtonText: "Yes",
     }).then(async (result) => {
       if (result.isConfirmed) {
+         setDataLoder(true);
         const response = await fetchData("/delete-user-details", {
           userId: id,
         });
+         setDataLoder(false);
         if (!response.success) {
           toast.error(response.message);
         } else {
